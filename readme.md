@@ -27,4 +27,4 @@ Check out the full example at [examples/hello.py](https://github.com/NiklasRosen
 
 ## Compatibility
 
-Requires Python 3.6 or higher.
+hcl2-eval requires Python 3.6 or higher.
