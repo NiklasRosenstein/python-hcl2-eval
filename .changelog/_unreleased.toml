@@ -1,0 +1,5 @@
+[[entries]]
+id = "658d2bf9-5c90-4553-ae00-82f09b9f1b65"
+type = "improvement"
+description = "Agressively decorate API with `@beartype` decorators."
+author = "@NiklasRosenstein"

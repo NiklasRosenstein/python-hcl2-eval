@@ -23,6 +23,7 @@ Repository = "https://github.com/NiklasRosenstein/python-hcl2-eval"
 python = "^3.6"
 hcl2-ast = "^0.3.0"
 typing-extensions = ">=3.10.0"
+beartype = "^0.10.4"
 
 [tool.poetry.dev-dependencies]
 black = "*"
