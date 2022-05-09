@@ -1,4 +1,6 @@
-from typing import Dict, List, Protocol, Union
+from typing import Dict, List, Union
+
+from typing_extensions import Protocol
 
 from .error import ConfigurationError
 from .types import Function, ValueType
