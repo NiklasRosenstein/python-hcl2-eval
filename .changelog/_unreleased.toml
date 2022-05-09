@@ -1,0 +1,5 @@
+[[entries]]
+id = "55322caf-247f-455a-8257-6c8bd209a91b"
+type = "improvement"
+description = "Bump dependency on `hcl2-ast`, we rely on `GetAttr.on` to not be optional"
+author = "@NiklasRosenstein"
