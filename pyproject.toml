@@ -21,7 +21,7 @@ Repository = "https://github.com/NiklasRosenstein/python-hcl2-eval"
 
 [tool.poetry.dependencies]
 python = "^3.6"
-hcl2-ast = "^0.2.0"
+hcl2-ast = "^0.3.0"
 typing-extensions = ">=3.10.0"
 
 [tool.poetry.dev-dependencies]
