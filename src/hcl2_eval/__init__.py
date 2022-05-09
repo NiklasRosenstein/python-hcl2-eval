@@ -2,7 +2,7 @@ __version__ = "0.1.1"
 
 from .api import Context, Evaluator, Interpreter
 from .error import ConfigurationError
-from .stanza import CommonStanza, Stanza
+from .stanza import CommonStanza, Stanza, StanzaOpener
 from .types import Function, PlainType, ValueType
 
 __all__ = [
@@ -15,4 +15,5 @@ __all__ = [
     "ConfigurationError",
     "CommonStanza",
     "Stanza",
+    "StanzaOpener",
 ]
