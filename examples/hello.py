@@ -2,7 +2,7 @@ from typing import List, Optional
 
 from hcl2_ast import parse_string
 from hcl2_ast import ast
-from hcl2_eval.exec import Block, ExecContext, block_opener
+from hcl2_eval.exec import Block, ExecContext, MatrixBlock, block_opener
 
 
 class HelloBlock(Block):
@@ -30,8 +30,15 @@ class ProjectBlock(Block):
 def main():
     module = parse_string(
         """
+        matrix "mat1" {
+            name = ["yennefer", "gerald"]
+            where = ["rivia", "ceris"]
+            hello {
+                name = "${name} (${where})"
+            }
+        }
         hello {
-            name = "World"
+            name = mat1__cross(":${name}-${where}")
         }
         """
     )
