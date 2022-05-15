@@ -24,6 +24,7 @@ python = "^3.6"
 hcl2-ast = "^0.3.0"
 typing-extensions = ">=3.10.0"
 beartype = "^0.10.4"
+typeapi = "^0.1.6"
 
 [tool.poetry.dev-dependencies]
 black = "*"

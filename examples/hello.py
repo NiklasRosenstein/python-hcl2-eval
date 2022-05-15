@@ -1,35 +1,30 @@
-from typing import Optional
+from typing import List, Optional
 
 from hcl2_ast import parse_string
+from hcl2_ast import ast
+from hcl2_eval.exec import Block, ExecContext, block_opener
 
-from hcl2_eval import ConfigurationError, Context, Evaluator, Interpreter, Stanza, ValueType
+
+class HelloBlock(Block):
+
+    name: str
 
 
-class HelloStanza(Stanza):
+class ProjectBlock(Block):
+
+    name: Optional[str]
+    hello_blocks: List["HelloBlock"]
+
     def __init__(self) -> None:
-        self.name: Optional[str] = None
+        self.hello_blocks = []
 
-    def validate(self) -> None:
-        if self.name is None:
-            raise ConfigurationError(self, 'attribute "name" must be set')
-
-    def say_hello(self) -> None:
-        assert self.name is not None
-        print(f"Hello, {self.name}!")
-
-    # Stanza
-
-    def attribute_set(self, attr_name: str, value: ValueType) -> None:
-        if attr_name == "name":
-            if not isinstance(value, str):
-                raise ConfigurationError(self, 'attribute "name" must be a str')
-            self.name = value
-        else:
-            super().set_attribute(attr_name, value)
-
-    def close(self) -> None:
-        self.validate()
-        self.say_hello()
+    @block_opener()
+    def hello(self, ctx: ExecContext, node: ast.Block) -> "HelloBlock":
+        if node.args:
+            raise ValueError(f"block hello does not support arguments")
+        block = HelloBlock()
+        self.hello_blocks.append(block)
+        return block
 
 
 def main():
@@ -41,8 +36,10 @@ def main():
         """
     )
 
-    context = Context.of(hello=HelloStanza)
-    Interpreter(Evaluator()).execute(module, context)
+    context = ExecContext(ProjectBlock())
+    context.execute(module.body)
+
+    print(context.block)
 
 
 if __name__ == "__main__":
