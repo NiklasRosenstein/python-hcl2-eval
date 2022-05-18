@@ -20,7 +20,7 @@ keywords = []
 Repository = "https://github.com/NiklasRosenstein/python-hcl2-eval"
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.7"
 hcl2-ast = "^0.4.0"
 typing-extensions = ">=3.10.0"
 beartype = "^0.10.4"
@@ -49,7 +49,7 @@ examples-hello = "python examples/hello.py"
 fmt = "black src/ tests/ examples/ && isort src/ tests/ examples/"
 
 [tool.mypy]
-python_version = "3.6"
+python_version = "3.7"
 explicit_package_bases = true
 mypy_path = ["src"]
 namespace_packages = true
