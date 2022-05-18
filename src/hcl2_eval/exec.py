@@ -3,13 +3,14 @@
 
 import copy
 import textwrap
-from msilib.schema import Environment
-from typing import Any, Callable, Dict, Iterator, List, Mapping, Optional, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Callable, Dict, Iterator, List, Mapping, Optional, TypeVar, Union
 
 import typeapi
 from hcl2_ast import ast
 
-from .eval import EvalContext
+if TYPE_CHECKING:
+    from .env import Environment
+    from .eval import EvalContext
 
 T = TypeVar("T")
 FunctionType = Callable[["ExecContext", ast.FunctionCall], Any]
@@ -116,7 +117,7 @@ class ExecContext:
     """Represents the execution context of a single block. It keeps track of the hierarchy of
     blocks in order to resolve variable references and named blocks."""
 
-    def __init__(self, env: Environment, block: Block, parent: Optional["ExecContext"] = None) -> None:
+    def __init__(self, env: "Environment", block: Block, parent: Optional["ExecContext"] = None) -> None:
         self.env = env
         self.block = block
         self.parent = parent
