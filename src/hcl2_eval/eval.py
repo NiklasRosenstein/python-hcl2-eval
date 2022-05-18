@@ -1,14 +1,17 @@
-import abc
 import operator
 from typing import TYPE_CHECKING, Any, Dict, List
 
 from hcl2_ast import ast
 
 if TYPE_CHECKING:
+    from .env import Environment
     from .exec import ExecContext
 
 
 class EvalContext:
+    def __init__(self, env: "Environment") -> None:
+        self.env = env
+
     def eval(self, expr: ast.Expression, ctx: "ExecContext") -> Any:
         method = "_eval_" + type(expr).__name__
         return getattr(self, method)(expr, ctx)
@@ -69,7 +72,7 @@ class EvalContext:
         return func(left, right)
 
     def _eval_GetIndex(self, get_index: ast.GetIndex, ctx: "ExecContext") -> Any:
-        return self.eval(get_index.on)[get_index.index.value]
+        return self.eval(get_index.on, ctx)[get_index.index.value]
 
     def _eval_IndexSplat(self, splat: ast.IndexSplat, ctx: "ExecContext") -> Any:
         raise NotImplementedError

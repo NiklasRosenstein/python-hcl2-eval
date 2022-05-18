@@ -2,7 +2,8 @@ from typing import List, Optional
 
 from hcl2_ast import ast, parse_string
 
-from hcl2_eval.exec import Block, ExecContext, MatrixBlock, block_opener
+from hcl2_eval.env import Environment
+from hcl2_eval.exec import Block, ExecContext, block_opener
 
 
 class HelloBlock(Block):
@@ -21,7 +22,7 @@ class ProjectBlock(Block):
     @block_opener()
     def hello(self, ctx: ExecContext, node: ast.Block) -> "HelloBlock":
         if node.args:
-            raise ValueError(f"block hello does not support arguments")
+            raise ValueError("block hello does not support arguments")
         block = HelloBlock()
         self.hello_blocks.append(block)
         return block
@@ -43,10 +44,8 @@ def main():
         """
     )
 
-    context = ExecContext(ProjectBlock())
-    context.execute(module.body)
-
-    print(context.block)
+    env = Environment()
+    env.execute(ProjectBlock(), module)
 
 
 if __name__ == "__main__":

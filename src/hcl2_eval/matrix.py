@@ -33,7 +33,7 @@ class MatrixBlock(Block):
 
     def open_block(self, ctx: "ExecContext", node: ast.Block) -> None:
         for variables in self.cross_product():
-            self._ctx.block.open_block(ctx.sub_context(variables), node)
+            self._ctx.block.open_block(ctx.sub_context(variables=variables), node)
 
     @block_function("cross")
     def _function_cross(self, ctx: ExecContext, node: ast.FunctionCall) -> Any:
@@ -42,10 +42,11 @@ class MatrixBlock(Block):
         try:
             result = []
             for variables in self.cross_product():
-                result.append(ctx.sub_context(variables).eval(node.args[0]))
+                result.append(ctx.sub_context(variables=variables).eval(node.args[0]))
             print(">>", result)
             return result
-        except:
+        except:  # noqa: E722
             # TOOD (@NiklasRosenstein): We don't want to propate an AttributeError that we can
-            #       mishap for the function not existing.
+            #       mishap for the function not existing. We should change blocks to raise a
+            #       specific error.
             raise Exception

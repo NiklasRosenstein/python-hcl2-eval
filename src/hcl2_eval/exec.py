@@ -10,7 +10,6 @@ from hcl2_ast import ast
 
 if TYPE_CHECKING:
     from .env import Environment
-    from .eval import EvalContext
 
 T = TypeVar("T")
 FunctionType = Callable[["ExecContext", ast.FunctionCall], Any]
@@ -129,15 +128,15 @@ class ExecContext:
             if isinstance(stmt, ast.Attribute):
                 self.block.attr_set(self, stmt)
             elif isinstance(stmt, ast.Block):
-                if stmt.name in self.global_block_openers:
-                    self.global_block_openers[stmt.name](self, stmt)
+                if stmt.name in self.env.block_openers:
+                    self.env.block_openers[stmt.name](self, stmt)
                 else:
                     self.block.open_block(self, stmt)
             else:
                 raise RuntimeError(f"unexpected statement: {stmt!r}")
 
     def eval(self, expr: ast.Expression) -> Any:
-        return EvalContext().eval(expr, self)
+        return self.env.eval_context(self.env).eval(expr, self)
 
     def attr_get(self, node: Union[ast.Identifier, ast.GetAttr]) -> Any:
         if isinstance(node, ast.Identifier) and node.name in self.variables:

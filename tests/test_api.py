@@ -1,9 +1,9 @@
 from typing import Type
 
 import pytest
-from hcl2_ast.ast import Expression, Stmt
+from hcl2_ast.ast import Expression
+
 from hcl2_eval.eval import EvalContext
-from hcl2_eval.exec import ExecContext
 
 
 @pytest.mark.parametrize("expr_type", Expression.__subclasses__())
