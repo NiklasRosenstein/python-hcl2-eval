@@ -1,8 +1,8 @@
 name: Python application
 
 on:
-  push: { branches: [ develop ], tags: [ "*" ] }
-  pull_request: { branches: [ develop ] }
+  push: { branches: [ refactor-eval ], tags: [ "*" ] }
+  pull_request: { branches: [ refactor-eval ] }
 
 jobs:
   test:
